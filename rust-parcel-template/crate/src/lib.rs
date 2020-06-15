@@ -49,3 +49,7 @@ pub fn run() -> Result<(), JsValue> {
     Ok(())
 }
 
+#[wasm_bindgen]
+pub fn arr() -> Box<[i32]> {
+    vec![1, 2, 3].into_boxed_slice()
+}
