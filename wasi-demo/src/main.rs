@@ -1,10 +1,9 @@
+use clap::{App, Arg};
 use std::env;
 use std::fs;
 
 #[macro_use] // macroを使うのでmacro_useを追記
 extern crate clap;
-
-use clap::{App, Arg};
 
 fn main() {
     let app = App::new(crate_name!()) // Cargo.tomlのnameを参照する
@@ -25,11 +24,9 @@ fn main() {
 fn ls(base: &str) -> Vec<String> {
     let dir = fs::read_dir(base).unwrap();
 
-    let mut entry = dir
+    let entry = dir
         .map(|f| f.unwrap().path().to_str().unwrap().to_string())
         .collect::<Vec<String>>();
-    entry.sort();
-    let entry = entry; // immutable にする
 
     entry
 }
