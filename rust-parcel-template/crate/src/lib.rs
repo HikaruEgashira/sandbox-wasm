@@ -5,6 +5,8 @@ extern crate wasm_bindgen;
 extern crate web_sys;
 use wasm_bindgen::prelude::*;
 
+use std::fs;
+
 cfg_if! {
     // When the `console_error_panic_hook` feature is enabled, we can call the
     // `set_panic_hook` function to get better error messages if we ever panic.
@@ -50,6 +52,16 @@ pub fn run() -> Result<(), JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn arr() -> Box<[i32]> {
-    vec![1, 2, 3].into_boxed_slice()
+pub fn arr() -> Vec<i32> {
+    vec![1, 2, 3]
+}
+
+#[wasm_bindgen]
+pub fn ls() -> String {
+    let paths = fs::read_dir("./").unwrap();
+
+    paths
+        .map(|path| path.unwrap().path().display().to_string())
+        .collect::<Vec<String>>()
+        .join(", ")
 }
